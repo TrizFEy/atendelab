@@ -1,0 +1,22 @@
+meta {
+  name: Buscar usuário por ID
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://localhost/atendelab/public/?controller=usuarios&action=buscarPorId&id=2
+  body: none
+  auth: inherit
+}
+
+params:query {
+  controller: usuarios
+  action: buscarPorId
+  id: 2
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
