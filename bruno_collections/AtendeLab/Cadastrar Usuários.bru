@@ -1,0 +1,29 @@
+meta {
+  name: Cadastrar Usuários
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost/atendelab/public/?controller=usuarios&action=criar
+  body: formUrlEncoded
+  auth: inherit
+}
+
+params:query {
+  controller: usuarios
+  action: criar
+}
+
+body:form-urlencoded {
+  nome: Maria Teste
+  email: maria.teste@atendelab.com
+  senha: 123456
+  perfil: relatora
+  status: ativo
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
