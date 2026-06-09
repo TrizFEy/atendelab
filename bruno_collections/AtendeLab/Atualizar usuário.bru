@@ -1,0 +1,29 @@
+meta {
+  name: Atualizar usuário
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost/atendelab/public/?controller=usuarios&action=atualizar
+  body: formUrlEncoded
+  auth: inherit
+}
+
+params:query {
+  controller: usuarios
+  action: atualizar
+}
+
+body:form-urlencoded {
+  id: 2
+  nome: João Teste Atualizado
+  email: joao.atualizado@atendelab.com
+  perfil: atendente
+  status: ativo
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
