@@ -1,0 +1,25 @@
+meta {
+  name: Excluir usuário
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost/atendelab/public/?controller=usuarios&action=excluir
+  body: formUrlEncoded
+  auth: inherit
+}
+
+params:query {
+  controller: usuarios
+  action: excluir
+}
+
+body:form-urlencoded {
+  id: 2
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
