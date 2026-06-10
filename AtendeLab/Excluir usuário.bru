@@ -1,0 +1,16 @@
+meta {
+  name: Excluir usuário
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost/atendelab/public/?controller=usuarios&action=excluir
+  body: none
+  auth: none
+}
+
+params:query {
+  controller: usuarios
+  action: excluir
+}
