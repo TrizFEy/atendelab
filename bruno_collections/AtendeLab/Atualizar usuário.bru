@@ -1,25 +1,25 @@
 meta {
-  name: Atualizar usuário
+  name: Cadastrar Usuários
   type: http
-  seq: 2
+  seq: 1
 }
 
 post {
-  url: http://localhost/atendelab/public/?controller=usuarios&action=atualizar
+  url: http://localhost/atendelab/public/?controller=usuarios&action=criar
   body: formUrlEncoded
   auth: inherit
 }
 
 params:query {
   controller: usuarios
-  action: atualizar
+  action: criar
 }
 
 body:form-urlencoded {
-  id: 2
-  nome: Maria Teste Atualizado
-  email: maria.atualizado@atendelab.com
-  perfil: relatora
+  nome: João Teste
+  email: joao.teste@atendelab.com
+  senha: 123456
+  perfil: atendente
   status: ativo
 }
 
