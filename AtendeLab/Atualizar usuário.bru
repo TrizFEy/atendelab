@@ -1,0 +1,16 @@
+meta {
+  name: Atualizar usuário
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost/atendelab/public/?controller=usuarios&action=atualizar
+  body: none
+  auth: none
+}
+
+params:query {
+  controller: usuarios
+  action: atualizar
+}

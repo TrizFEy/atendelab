@@ -1,0 +1,16 @@
+meta {
+  name: Listar usuários
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://localhost/atendelab/public/?controller=usuarios&action=listar
+  body: none
+  auth: none
+}
+
+params:query {
+  controller: usuarios
+  action: listar
+}
