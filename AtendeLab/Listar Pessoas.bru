@@ -5,11 +5,21 @@ meta {
 }
 
 get {
-  url: http://localhost/atendelab/public/
-  body: none
+  url: http://localhost/atendelab/public/?controller=pessoas&action=listar
+  body: formUrlEncoded
   auth: inherit
+}
+
+params:query {
+  controller: pessoas
+  action: listar
+}
+
+headers {
+  Accept: application/json
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }

@@ -7,7 +7,7 @@ meta {
 post {
   url: http://localhost/atendelab/public/?controller=pessoas&action=criar
   body: formUrlEncoded
-  auth: inherit
+  auth: bearer
 }
 
 params:query {
@@ -15,15 +15,18 @@ params:query {
   action: criar
 }
 
+headers {
+  Accept: application/json
+}
+
 body:form-urlencoded {
-  id: 1
-  nome: Ingrid Silva
-  documento: 119.359.105-91
-  telefone: (47) 99944-6664
+  nome: Mariana Silva
+  documento: 119.444.105-91
+  telefone: (47) 98854-6664
   curso: Ciência da Computação
-  periodo: 6º Período
+  periodo: 5º Período
   status: Matriculado
-  observacoes: 
+  observacoes: criado dia 22-06
   atualizado_em: 2026-06-15 20:05:45
 }
 
