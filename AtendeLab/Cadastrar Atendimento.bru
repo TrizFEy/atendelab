@@ -1,0 +1,42 @@
+meta {
+  name: Cadastrar Atendimento
+  type: http
+  seq: 10
+}
+
+post {
+  url: http://localhost/atendelab/public/?controller=atendimentos&action=criar
+  body: formUrlEncoded
+  auth: inherit
+}
+
+params:query {
+  controller: atendimentos
+  action: criar
+}
+
+headers {
+  Accept: application/json
+}
+
+body:form-urlencoded {
+  pessoa_id: 1
+  tipo_atendimento_id: 1
+  usuario_id: 1
+  data_atendimento: 2026-06-15
+  hora_atendimento: 19:39:00
+  descricao: Aluna com dúvidas sobre como lançar as horas complementares no portal.
+  observacao: Foi realizado um acesso remoto para demonstrar o passo a passo. Dúvida sanada.
+  status: ativo
+  criado_em: 2026-06-15 19:39:00
+  observacao_final: 
+  atualizado_em: '''
+    	
+    2026-06-15 20:05:45
+  '''
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

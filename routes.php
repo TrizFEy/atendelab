@@ -36,7 +36,7 @@ switch ($controller) {
         break;
 
     case 'pessoas':
-
+        exigirAutenticacao();
         $obj = new PessoasController();
         switch ($action) {
             case 'listar': $obj->listar(); break;
@@ -49,7 +49,7 @@ switch ($controller) {
         break;
 
     case 'atendimentos':
-        exigirAutenticacao();
+
         $obj = new AtendimentosController();
         switch ($action) {
             case 'listar': $obj->listar(); break;
@@ -62,7 +62,7 @@ switch ($controller) {
         break;
 
     case 'tipos_atendimentos':
-        exigirAutenticacao();
+   
         $obj = new TiposAtendimentosController();
         switch ($action) {
             case 'listar': $obj->listar(); break;
