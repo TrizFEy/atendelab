@@ -2,6 +2,9 @@
 
 require_once __DIR__ . '/app/Controllers/AuthController.php';
 require_once __DIR__ . '/app/Controllers/UsuariosController.php';
+require_once __DIR__ . '/app/Controllers/PessoasController.php';
+require_once __DIR__ . '/app/Controllers/AtendimentosController.php';
+require_once __DIR__ . '/app/Controllers/TiposAtendimentosController.php';
 require_once __DIR__ . '/app/Middleware/auth.php';
 
 $controller = $_GET['controller'] ?? 'auth';
@@ -9,63 +12,69 @@ $action = $_GET['action'] ?? 'login';
 
 switch ($controller) {
     case 'auth':
-        $authController = new AuthController();
-
+        $obj = new AuthController();
         switch ($action) {
-            case 'login':
-                $authController->exibirLogin();
-                break;
-
-            case 'entrar':
-                $authController->entrar();
-                break;
-
-            case 'dashboard':
-                $authController->dashboard();
-                break;
-
-            case 'logout':
-                $authController->logout();
-                break;
-
-            default:
-                http_response_code(404);
-                echo 'Acao de autenticacao nao encontrada.';
+            case 'login': $obj->exibirLogin(); break;
+            case 'entrar': $obj->entrar(); break;
+            case 'dashboard': $obj->dashboard(); break;
+            case 'logout': $obj->logout(); break;
+            default: http_response_code(404); echo 'Ação não encontrada.';
         }
         break;
 
     case 'usuarios':
         exigirAutenticacao();
-        $usuariosController = new UsuariosController();
-
+        $obj = new UsuariosController();
         switch ($action) {
-            case 'listar':
-                $usuariosController->listar();
-                break;
+            case 'listar': $obj->listar(); break;
+            case 'buscarPorId': $obj->buscarPorId(); break;
+            case 'criar': $obj->criar(); break;
+            case 'atualizar': $obj->atualizar(); break;
+            case 'excluir': $obj->excluir(); break;
+            default: http_response_code(404); echo 'Ação não encontrada.';
+        }
+        break;
 
-            case 'buscarPorId':
-                $usuariosController->buscarPorId();
-                break;
+    case 'pessoas':
+        exigirAutenticacao();
+        $obj = new PessoasController();
+        switch ($action) {
+            case 'listar': $obj->listar(); break;
+            case 'buscarPorId': $obj->buscarPorId(); break;
+            case 'criar': $obj->criar(); break;
+            case 'atualizar': $obj->atualizar(); break;
+            case 'excluir': $obj->excluir(); break;
+            default: http_response_code(404); echo 'Ação não encontrada.';
+        }
+        break;
 
-            case 'criar':
-                $usuariosController->criar();
-                break;
+    case 'atendimentos':
+        exigirAutenticacao();
+        $obj = new AtendimentosController();
+        switch ($action) {
+            case 'listar': $obj->listar(); break;
+            case 'buscarPorId': $obj->buscarPorId(); break;
+            case 'criar': $obj->criar(); break;
+            case 'atualizar': $obj->atualizar(); break;
+            case 'excluir': $obj->excluir(); break;
+            default: http_response_code(404); echo 'Ação não encontrada.';
+        }
+        break;
 
-            case 'atualizar':
-                $usuariosController->atualizar();
-                break;
-
-            case 'excluir':
-                $usuariosController->excluir();
-                break;
-
-            default:
-                http_response_code(404);
-                echo 'Acao de usuarios nao encontrada.';
+    case 'tipos_atendimentos':
+        exigirAutenticacao();
+        $obj = new TiposAtendimentosController();
+        switch ($action) {
+            case 'listar': $obj->listar(); break;
+            case 'buscarPorId': $obj->buscarPorId(); break;
+            case 'criar': $obj->criar(); break;
+            case 'atualizar': $obj->atualizar(); break;
+            case 'excluir': $obj->excluir(); break;
+            default: http_response_code(404); echo 'Ação não encontrada.';
         }
         break;
 
     default:
         http_response_code(404);
-        echo 'Controller nao encontrado.';
+        echo 'Controller não encontrado.';
 }

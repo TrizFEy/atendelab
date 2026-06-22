@@ -1,0 +1,33 @@
+meta {
+  name: Cadastrar Pessoas
+  type: http
+  seq: 6
+}
+
+post {
+  url: http://localhost/atendelab/public/?controller=pessoas&action=criar
+  body: formUrlEncoded
+  auth: inherit
+}
+
+params:query {
+  controller: pessoas
+  action: criar
+}
+
+body:form-urlencoded {
+  id: 1
+  nome: Ingrid Silva
+  documento: 119.359.105-91
+  telefone: (47) 99944-6664
+  curso: Ciência da Computação
+  periodo: 6º Período
+  status: Matriculado
+  observacoes: 
+  atualizado_em: 2026-06-15 20:05:45
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
