@@ -111,7 +111,7 @@ class AtendimentosController
         $this->json(['mensagem' => 'Atendimento registrado com sucesso.'], 201);
     }
 
-    public function alterarStatus(): void
+    public function inativar(): void
     {
         $id = filter_var($_POST['id'] ?? null, FILTER_VALIDATE_INT);
         $status = $_POST['status'] ?? '';
@@ -143,5 +143,61 @@ class AtendimentosController
             'observacao' => $observacao !== '' ? $observacao : null,
         ]);
         $this->json(['mensagem' => 'Status atualizado com sucesso.']);
+    }
+    public function atualizar(): void
+    {
+        header('Content-Type: application/json; charset=utf-8');
+
+        $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+
+        $nome = trim($_POST['nome'] ?? '');
+        $documento = trim($_POST['documento'] ?? '');
+        $telefone = trim($_POST['telefone'] ?? '');
+        $curso = trim($_POST['curso'] ?? '');
+        $periodo = trim($_POST['periodo'] ?? '');
+        $status = trim($_POST['status'] ?? 'Ativo');
+
+        if (!$id || $nome === '') {
+            http_response_code(400);
+            echo json_encode(['erro' => 'ID e nome são obrigatórios.']);
+            return;
+        }
+
+        try {
+
+            $sql = "UPDATE pessoas
+                    SET
+                        nome = :nome,
+                        documento = :documento,
+                        telefone = :telefone,
+                        curso = :curso,
+                        periodo = :periodo,
+                        status = :status
+                    WHERE id = :id";
+
+            $stmt = $this->pdo->prepare($sql);
+
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            $stmt->bindValue(':nome', $nome);
+            $stmt->bindValue(':documento', $documento);
+            $stmt->bindValue(':telefone', $telefone);
+            $stmt->bindValue(':curso', $curso);
+            $stmt->bindValue(':periodo', $periodo);
+            $stmt->bindValue(':status', $status);
+
+            $stmt->execute();
+
+            echo json_encode([
+                'mensagem' => 'Pessoa atualizada com sucesso.'
+            ], JSON_UNESCAPED_UNICODE);
+
+        } catch (PDOException $e) {
+
+            http_response_code(500);
+
+            echo json_encode([
+                'erro' => 'Erro ao atualizar pessoa.'
+            ]);
+        }
     }
 }
