@@ -36,7 +36,7 @@ switch ($controller) {
                 http_response_code(404);
                 echo 'Acao de autenticacao nao encontrada.';
         }
-        break;
+    break;
 
     case 'usuarios':
         exigirAutenticacao();
@@ -69,7 +69,7 @@ switch ($controller) {
                 http_response_code(404);
                 echo 'Acao de usuarios nao encontrada.';
         }
-        break;
+    break;
 
     case 'pessoas':
         
@@ -101,9 +101,9 @@ switch ($controller) {
                 http_response_code(404);
                 echo 'Acao de pessoas nao encontrada.';
         }
-        break;
+    break;
 
-        case 'tiposAtendimentos':
+    case 'tiposAtendimentos':
 
         $tiposController = new TiposAtendimentosController();
 
@@ -132,7 +132,7 @@ switch ($controller) {
         default:
             http_response_code(404);
             echo 'Acao de tipos de atendimento nao encontrada.';
-    }
+        }
     break;
 
     case 'atendimentos':
@@ -163,7 +163,7 @@ switch ($controller) {
 
         default:
             echo 'Ação de atendimentos não encontrada.';
-    }
+        }
     break;
 
     default:
