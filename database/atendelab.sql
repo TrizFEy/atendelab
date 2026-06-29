@@ -59,6 +59,7 @@ INSERT INTO `atendimentos` (`id`, `pessoa_id`, `tipo_atendimento_id`, `usuario_i
 CREATE TABLE `pessoas` (
   `id` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `documento` varchar(20) NOT NULL,
   `telefone` varchar(20) NOT NULL,
   `curso` varchar(100) NOT NULL,
@@ -72,9 +73,9 @@ CREATE TABLE `pessoas` (
 -- Despejando dados para a tabela `pessoas`
 --
 
-INSERT INTO `pessoas` (`id`, `nome`, `documento`, `telefone`, `curso`, `periodo`, `status`, `observacoes`, `atualizado_em`) VALUES
-(1, 'Ingrid Silva', '119.359.105-91', '(47) 99944-6664', 'Ciência da Computação', '6º Período', 'Matriculado', NULL, '2026-06-15 23:05:45'),
-(2, 'Mariana Silva', '119.444.105-91', '(47) 98854-6664', 'Ciência da Computação', '5º Período', 'Matriculado', 'criado dia 22-06', '2026-06-22 23:27:47');
+INSERT INTO `pessoas` (`id`, `nome`, `email`, `documento`, `telefone`, `curso`, `periodo`, `status`, `observacoes`, `atualizado_em`) VALUES
+(1, 'Ingrid Silva', 'ingrid.silva@universidade.com', '119.359.105-91', '(47) 99944-6664', 'Ciência da Computação', '6º Período', 'Matriculado', NULL, '2026-06-15 23:05:45'),
+(2, 'Mariana Silva', 'mariana.silva@universidade.com', '119.444.105-91', '(47) 98854-6664', 'Ciência da Computação', '5º Período', 'Matriculado', 'criado dia 22-06', '2026-06-22 23:27:47');
 
 -- --------------------------------------------------------
 
@@ -142,7 +143,8 @@ ALTER TABLE `atendimentos`
 --
 ALTER TABLE `pessoas`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `documento` (`documento`);
+  ADD UNIQUE KEY `documento` (`documento`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Índices de tabela `tipos_atendimentos`

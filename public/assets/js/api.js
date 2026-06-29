@@ -1,5 +1,5 @@
 window.AtendeLabApi = (() => { 
-   const baseUrl = '/atendelab/public/'; 
+   const baseUrl = window.location.origin + '/atendelab/public/';
  
    async function request(controller, action, { method = 'GET', query = {}, body = null } = {}) 
 { 

@@ -23,7 +23,7 @@ class AtendimentosController
                 t.nome AS tipo_nome, 
                 u.nome AS responsavel_nome, 
                 a.descricao, a.status, 
-                a.data_atendimento, a.horario_atendimento, 
+                a.data_atendimento,
                 a.observacao_final 
                 FROM atendimentos a 
                 INNER JOIN pessoas p ON p.id = a.pessoa_id 
@@ -78,11 +78,10 @@ class AtendimentosController
         );
         $descricao = trim($_POST['descricao'] ?? '');
         $data = $_POST['data_atendimento'] ?? '';
-        $horario = $_POST['horario_atendimento'] ?? '';
         $status = $_POST['status'] ?? 'aberto';
 
         if (!$pessoaId || !$tipoId || !$usuarioId || 
-            $descricao === '' || $data === '' || $horario === '') {
+            $descricao === '' || $data === '') {
             $this->json(['erro' => 'Preencha os campos obrigatórios.'], 422);
             return;
         }
@@ -94,10 +93,10 @@ class AtendimentosController
         $stmt = $this->pdo->prepare(
             'INSERT INTO atendimentos 
                 (pessoa_id, tipo_atendimento_id, usuario_id, descricao, 
-                status, data_atendimento, horario_atendimento) 
+                status, data_atendimento) 
                 VALUES 
                 (:pessoa_id, :tipo_id, :usuario_id, :descricao, 
-                :status, :data_atendimento, :horario_atendimento)'
+                :status, :data_atendimento)'
         );
         $stmt->execute([
             'pessoa_id' => $pessoaId,
@@ -106,7 +105,6 @@ class AtendimentosController
             'descricao' => $descricao,
             'status' => $status,
             'data_atendimento' => $data,
-            'horario_atendimento' => $horario,
         ]);
         $this->json(['mensagem' => 'Atendimento registrado com sucesso.'], 201);
     }

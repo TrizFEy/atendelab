@@ -5,6 +5,7 @@ require_once __DIR__ . '/app/Controllers/UsuariosController.php';
 require_once __DIR__ . '/app/Controllers/PessoasController.php';
 require_once __DIR__ . '/app/Controllers/TiposAtendimentosController.php';
 require_once __DIR__ . '/app/Controllers/AtendimentosController.php';
+require_once __DIR__ . '/app/Controllers/FrontendController.php';
 require_once __DIR__ . '/app/Middleware/auth.php';
 
 $controller = $_GET['controller'] ?? 'auth';
@@ -166,6 +167,31 @@ switch ($controller) {
         }
     break;
 
+    case 'frontend':
+        
+    exigirAutenticacao();
+
+    $frontendController = new FrontendController();
+
+    switch ($action) {
+
+        case 'pessoas':
+            $frontendController->pessoas();
+            break;
+
+        case 'tipos':
+            $frontendController->tipos();
+            break;
+
+        case 'atendimentos':
+            $frontendController->atendimentos();
+            break;
+
+        default:
+            http_response_code(404);
+            echo 'Ação do frontend não encontrada.';
+    }
+    break;
     default:
         http_response_code(404);
         echo 'Controller nao encontrado.';
