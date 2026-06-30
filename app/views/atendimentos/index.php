@@ -367,7 +367,7 @@ document.getElementById('formStatus').addEventListener(
         try {
             await AtendeLabApi.post(
                 'atendimentos',
-                'alterarStatus',
+                'atualizar',
                 new FormData(event.target)
             );
 
