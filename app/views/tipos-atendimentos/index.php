@@ -236,7 +236,7 @@ async function editarTipo(id) {
     try {
         const resposta = await AtendeLabApi.get(
             'tiposAtendimentos',
-            'buscar',
+            'buscarPorId',
             { id }
         );
 
