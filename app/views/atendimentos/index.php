@@ -53,14 +53,6 @@ require_once __DIR__ . '/../layouts/header.php';
                         required>
                 </div>
 
-                <div class="col-md-4">
-                    <label class="form-label">Horário *</label>
-                    <input
-                        class="form-control"
-                        type="time"
-                        name="horario_atendimento"
-                        required>
-                </div>
 
                 <div class="col-12">
                     <label class="form-label">Descrição *</label>
@@ -131,6 +123,7 @@ require_once __DIR__ . '/../layouts/header.php';
             <form id="formStatus">
                 <div class="modal-body">
                     <input type="hidden" name="id" id="statusId">
+                    <input type="hidden" name="pessoa_id" id="statusPessoaId">
 
                     <div class="mb-3">
                         <label class="form-label">Novo status</label>
@@ -147,7 +140,7 @@ require_once __DIR__ . '/../layouts/header.php';
 
                         <textarea
                             class="form-control"
-                            name="observacao_final"
+                            name="observacao"
                             rows="3"
                             placeholder="Obrigatória ao concluir"></textarea>
                     </div>
@@ -284,6 +277,7 @@ async function carregarAtendimentos() {
                 'data'
             );
 
+            const statusLimpo = atendimento.status ? atendimento.status.toLowerCase() : 'aberto';
             const classeStatus =
                 atendimento.status === 'concluido'
                     ? 'text-bg-success'
@@ -308,7 +302,8 @@ async function carregarAtendimentos() {
                             class="btn btn-sm btn-outline-primary"
                             onclick="abrirStatus(
                                 ${Number(atendimento.id)},
-                                '${AtendeLabApi.escapeAttr(atendimento.status)}'
+                                '${AtendeLabApi.escapeAttr(atendimento.status)}',
+                                ${Number(atendimento.pessoa_id)}
                             )">
                             Status
                         </button>
@@ -345,15 +340,16 @@ formAtendimento.addEventListener('submit', async event => {
     }
 });
 
-function abrirStatus(id, status) {
+function abrirStatus(id, status, pessoaId) {
     document.getElementById('statusId').value = id;
+    document.getElementById('statusPessoaId').value = pessoaId;
 
     document.querySelector(
         '#formStatus [name="status"]'
     ).value = status || 'aberto';
 
     document.querySelector(
-        '#formStatus [name="observacao_final"]'
+        '#formStatus [name="observacao"]'
     ).value = '';
 
     statusModal().show();
