@@ -21,11 +21,11 @@ class AuthController
     {
 
         if (usuarioAutenticado()) {
-            header('Location: ?controller=auth&action=dashboard');
+            header('Location: /atendelab/public/?controller=auth&action=dashboard');
             exit;
         }
 
-        $erro = $_SESSION['erro_login'] ?? null;
+        $erroLogin = $_SESSION['erro_login'] ?? null;
         $mensagem = $_SESSION['mensagem'] ?? null;
 
         unset($_SESSION['erro_login'], $_SESSION['mensagem']);
@@ -37,7 +37,7 @@ class AuthController
     {
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: ?controller=auth&action=login');
+            header('Location: /atendelab/public/?controller=auth&action=login');
             exit;
         }
 
@@ -47,14 +47,14 @@ class AuthController
         if ($email === '' || $senha === '') {
             $_SESSION['erro_login'] = 'Informe o e-mail e a senha.';
 
-            header('Location: ?controller=auth&action=login');
+            header('Location: /atendelab/public/?controller=auth&action=login');
             exit;
         }
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $_SESSION['erro_login'] = 'Informe um e-mail válido.';
 
-            header('Location: ?controller=auth&action=login');
+            header('Location: /atendelab/public/?controller=auth&action=login');
             exit;
         }
 
@@ -78,7 +78,7 @@ class AuthController
         ) {
             $_SESSION['erro_login'] = 'E-mail ou senha inválidos.';
 
-            header('Location: ?controller=auth&action=login');
+            header('Location: /atendelab/public/?controller=auth&action=login');
             exit;
         }
 
@@ -91,7 +91,7 @@ class AuthController
             'perfil' => $usuario['perfil'],
         ];
 
-        header('Location: ?controller=auth&action=dashboard');
+        header('Location: /atendelab/public/?controller=auth&action=dashboard');
         exit;
     }
 
@@ -128,7 +128,7 @@ class AuthController
 
         $_SESSION['mensagem'] = 'Sessão encerrada com sucesso.';
 
-        header('Location: ?controller=auth&action=login');
+        header('Location: /atendelab/public/?controller=auth&action=login');
         exit;
     }
 }
