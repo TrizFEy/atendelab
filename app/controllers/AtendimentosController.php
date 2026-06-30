@@ -24,7 +24,6 @@ class AtendimentosController
                     a.usuario_id,
                     u.nome AS usuario_nome,
                     a.data_atendimento,
-                    a.hora_atendimento,
                     a.descricao,
                     a.observacao,
                     a.status,
@@ -62,7 +61,6 @@ class AtendimentosController
                     a.usuario_id,
                     u.nome AS usuario_nome,
                     a.data_atendimento,
-                    a.hora_atendimento,
                     a.descricao,
                     a.observacao,
                     a.status,
@@ -97,17 +95,15 @@ class AtendimentosController
         $usuario_id = filter_input(INPUT_POST, 'usuario_id', FILTER_VALIDATE_INT);
 
         $data_atendimento = trim($_POST['data_atendimento'] ?? '');
-        $hora_atendimento = trim($_POST['hora_atendimento'] ?? '');
         $descricao = trim($_POST['descricao'] ?? '');
         $observacao = trim($_POST['observacao'] ?? '');
-        $status = trim($_POST['status'] ?? 'Aberto');
+        $status = trim($_POST['status'] ?? 'aberto');
 
         if (
             !$pessoa_id ||
             !$tipo_atendimento_id ||
             !$usuario_id ||
-            $data_atendimento === '' ||
-            $hora_atendimento === ''
+            $data_atendimento === ''
         ) {
             http_response_code(400);
 
@@ -126,7 +122,6 @@ class AtendimentosController
                         tipo_atendimento_id,
                         usuario_id,
                         data_atendimento,
-                        hora_atendimento,
                         descricao,
                         observacao,
                         status
@@ -137,7 +132,6 @@ class AtendimentosController
                         :tipo_atendimento_id,
                         :usuario_id,
                         :data_atendimento,
-                        :hora_atendimento,
                         :descricao,
                         :observacao,
                         :status
@@ -149,7 +143,6 @@ class AtendimentosController
             $stmt->bindValue(':tipo_atendimento_id', $tipo_atendimento_id, PDO::PARAM_INT);
             $stmt->bindValue(':usuario_id', $usuario_id, PDO::PARAM_INT);
             $stmt->bindValue(':data_atendimento', $data_atendimento);
-            $stmt->bindValue(':hora_atendimento', $hora_atendimento);
             $stmt->bindValue(':descricao', $descricao);
             $stmt->bindValue(':observacao', $observacao);
             $stmt->bindValue(':status', $status);
@@ -178,65 +171,43 @@ class AtendimentosController
         header('Content-Type: application/json; charset=utf-8');
 
         $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
-
-        $pessoa_id = filter_input(INPUT_POST, 'pessoa_id', FILTER_VALIDATE_INT);
-        $tipo_atendimento_id = filter_input(INPUT_POST, 'tipo_atendimento_id', FILTER_VALIDATE_INT);
-        $usuario_id = filter_input(INPUT_POST, 'usuario_id', FILTER_VALIDATE_INT);
-
-        $data_atendimento = trim($_POST['data_atendimento'] ?? '');
-        $hora_atendimento = trim($_POST['hora_atendimento'] ?? '');
-        $descricao = trim($_POST['descricao'] ?? '');
+        $status = trim($_POST['status'] ?? '');
         $observacao = trim($_POST['observacao'] ?? '');
-        $status = trim($_POST['status'] ?? 'Aberto');
 
-        if (!$id || !$pessoa_id) {
+        if (!$id) {
             http_response_code(400);
-            echo json_encode(['erro' => 'ID e pessoa são obrigatórios.']);
+            echo json_encode(['erro' => 'ID é obrigatório.']);
+            return;
+        }
+
+        if ($status === '') {
+            http_response_code(400);
+            echo json_encode(['erro' => 'O status é obrigatório.']);
             return;
         }
 
         try {
-
-            $sql = "UPDATE atendimentos
-                    SET
-                        pessoa_id = :pessoa_id,
-                        tipo_atendimento_id = :tipo_atendimento_id,
-                        usuario_id = :usuario_id,
-                        data_atendimento = :data_atendimento,
-                        hora_atendimento = :hora_atendimento,
-                        descricao = :descricao,
-                        observacao = :observacao,
-                        status = :status
+            $sql = "UPDATE atendimentos 
+                    SET status = :status, observacao = :observacao 
                     WHERE id = :id";
 
             $stmt = $this->pdo->prepare($sql);
-
-            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-            $stmt->bindValue(':pessoa_id', $pessoa_id, PDO::PARAM_INT);
-            $stmt->bindValue(':tipo_atendimento_id', $tipo_atendimento_id, PDO::PARAM_INT);
-            $stmt->bindValue(':usuario_id', $usuario_id, PDO::PARAM_INT);
-            $stmt->bindValue(':data_atendimento', $data_atendimento);
-            $stmt->bindValue(':hora_atendimento', $hora_atendimento);
-            $stmt->bindValue(':descricao', $descricao);
-            $stmt->bindValue(':observacao', $observacao);
             $stmt->bindValue(':status', $status);
-
+            $stmt->bindValue(':observacao', $observacao);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
 
             echo json_encode([
-                'mensagem' => 'Atendimento atualizado com sucesso.'
+                'mensagem' => 'Status do atendimento atualizado com sucesso.'
             ], JSON_UNESCAPED_UNICODE);
+            return;
 
         } catch (PDOException $e) {
-
             http_response_code(500);
-
-            echo json_encode([
-                'erro' => 'Erro ao atualizar atendimento.'
-            ]);
+            echo json_encode(['erro' => 'Erro ao atualizar status do atendimento.']);
+            return;
         }
     }
-
     public function inativar(): void
     {
         header('Content-Type: application/json; charset=utf-8');
