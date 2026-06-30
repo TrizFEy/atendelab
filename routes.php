@@ -1,12 +1,12 @@
 <?php
 
-require_once __DIR__ . '/app/Controllers/AuthController.php';
-require_once __DIR__ . '/app/Controllers/UsuariosController.php';
-require_once __DIR__ . '/app/Controllers/PessoasController.php';
-require_once __DIR__ . '/app/Controllers/TiposAtendimentosController.php';
-require_once __DIR__ . '/app/Controllers/AtendimentosController.php';
-require_once __DIR__ . '/app/Controllers/FrontendController.php';
-require_once __DIR__ . '/app/Middleware/auth.php';
+require_once __DIR__ . '/app/controllers/AuthController.php';
+require_once __DIR__ . '/app/controllers/UsuariosController.php';
+require_once __DIR__ . '/app/controllers/PessoasController.php';
+require_once __DIR__ . '/app/controllers/TiposAtendimentosController.php';
+require_once __DIR__ . '/app/controllers/AtendimentosController.php';
+require_once __DIR__ . '/app/controllers/FrontendController.php';
+require_once __DIR__ . '/app/middleware/auth.php';
 
 $controller = $_GET['controller'] ?? 'auth';
 $action = $_GET['action'] ?? 'login';
@@ -73,7 +73,7 @@ switch ($controller) {
         break;
 
     case 'pessoas':
-                exigirAutenticacao();
+        exigirAutenticacao();
         
         $pessoasController = new PessoasController();
 
@@ -105,8 +105,8 @@ switch ($controller) {
         }
         break;
 
-        case 'tiposAtendimentos':
-                    exigirAutenticacao();
+    case 'tiposAtendimentos':
+        exigirAutenticacao();
 
         $tiposController = new TiposAtendimentosController();
 
@@ -139,60 +139,60 @@ switch ($controller) {
     break;
 
     case 'atendimentos':
-                exigirAutenticacao();
+        exigirAutenticacao();
 
-    $atendimentosController = new AtendimentosController();
+        $atendimentosController = new AtendimentosController();
 
-    switch ($action) {
+        switch ($action) {
 
-        case 'listar':
-            $atendimentosController->listar();
-            break;
+            case 'listar':
+                $atendimentosController->listar();
+                break;
 
-        case 'buscarPorId':
-            $atendimentosController->buscarPorId();
-            break;
+            case 'buscarPorId':
+                $atendimentosController->buscarPorId();
+                break;
 
-        case 'criar':
-            $atendimentosController->criar();
-            break;
+            case 'criar':
+                $atendimentosController->criar();
+                break;
 
-        case 'atualizar':
-            $atendimentosController->atualizar();
-            break;
+            case 'atualizar':
+                $atendimentosController->atualizar();
+                break;
 
-        case 'inativar':
-            $atendimentosController->inativar();
-            break;
+            case 'inativar':
+                $atendimentosController->inativar();
+                break;
 
-        default:
-            echo 'Ação de atendimentos não encontrada.';
+            default:
+                echo 'Ação de atendimentos não encontrada.';
     }
     break;
 
     case 'frontend':
-    exigirAutenticacao();
+        exigirAutenticacao();
 
-    $frontendController = new FrontendController();
+        $frontendController = new FrontendController();
 
-    switch ($action) {
+        switch ($action) {
 
-        case 'pessoas':
-            $frontendController->pessoas();
-            break;
+            case 'pessoas':
+                $frontendController->pessoas();
+                break;
 
-        case 'tipos':
-            $frontendController->tipos();
-            break;
+            case 'tipos':
+                $frontendController->tipos();
+                break;
 
-        case 'atendimentos':
-            $frontendController->atendimentos();
-            break;
+            case 'atendimentos':
+                $frontendController->atendimentos();
+                break;
 
-        default:
-            http_response_code(404);
-            echo 'Ação do frontend não encontrada.';
-    }
+            default:
+                http_response_code(404);
+                echo 'Ação do frontend não encontrada.';
+        }
 
     break;
 
