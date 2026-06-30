@@ -18,9 +18,11 @@ class PessoasController
                     id,
                     nome,
                     documento,
+                    email,
                     telefone,
                     curso,
                     periodo,
+                    observacoes,
                     status
                 FROM pessoas
                 ORDER BY id DESC";
@@ -47,9 +49,11 @@ class PessoasController
                     id,
                     nome,
                     documento,
+                    email,
                     telefone,
                     curso,
                     periodo,
+                    observacoes,
                     status
                 FROM pessoas
                 WHERE id = :id";
@@ -75,9 +79,11 @@ class PessoasController
 
         $nome = trim($_POST['nome'] ?? '');
         $documento = trim($_POST['documento'] ?? '');
+        $email = trim($_POST['email'] ?? '');
         $telefone = trim($_POST['telefone'] ?? '');
         $curso = trim($_POST['curso'] ?? '');
         $periodo = trim($_POST['periodo'] ?? '');
+        $observacoes = trim($_POST['observacoes'] ?? '');
         $status = trim($_POST['status'] ?? 'Ativo');
 
         if (
@@ -102,18 +108,22 @@ class PessoasController
                     (
                         nome,
                         documento,
+                        email,
                         telefone,
                         curso,
                         periodo,
+                        observacoes,
                         status
                     )
                     VALUES
                     (
                         :nome,
                         :documento,
+                        :email,
                         :telefone,
                         :curso,
                         :periodo,
+                        :observacoes,
                         :status
                     )";
 
@@ -121,9 +131,11 @@ class PessoasController
 
             $stmt->bindValue(':nome', $nome);
             $stmt->bindValue(':documento', $documento);
+            $stmt->bindValue(':email', $email);
             $stmt->bindValue(':telefone', $telefone);
             $stmt->bindValue(':curso', $curso);
             $stmt->bindValue(':periodo', $periodo);
+            $stmt->bindValue(':observacoes', $observacoes);
             $stmt->bindValue(':status', $status);
 
             $stmt->execute();
@@ -153,9 +165,11 @@ class PessoasController
 
         $nome = trim($_POST['nome'] ?? '');
         $documento = trim($_POST['documento'] ?? '');
+        $email = trim($_POST['email'] ?? '');
         $telefone = trim($_POST['telefone'] ?? '');
         $curso = trim($_POST['curso'] ?? '');
         $periodo = trim($_POST['periodo'] ?? '');
+        $observacoes = trim($_POST['observacoes'] ?? '');
         $status = trim($_POST['status'] ?? 'Ativo');
 
         if (!$id || $nome === '') {
@@ -170,9 +184,11 @@ class PessoasController
                     SET
                         nome = :nome,
                         documento = :documento,
+                        email = :email,
                         telefone = :telefone,
                         curso = :curso,
                         periodo = :periodo,
+                        observacoes = :observacoes,
                         status = :status
                     WHERE id = :id";
 
@@ -180,10 +196,12 @@ class PessoasController
 
             $stmt->bindValue(':id', $id, PDO::PARAM_INT);
             $stmt->bindValue(':nome', $nome);
+            $stmt->bindValue(':email', $email);
             $stmt->bindValue(':documento', $documento);
             $stmt->bindValue(':telefone', $telefone);
             $stmt->bindValue(':curso', $curso);
             $stmt->bindValue(':periodo', $periodo);
+            $stmt->bindValue(':observacoes', $observacoes);
             $stmt->bindValue(':status', $status);
 
             $stmt->execute();
