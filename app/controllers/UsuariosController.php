@@ -119,7 +119,7 @@ class UsuariosController {
         $perfil = $_POST['perfil'] ?? 'atendente';
         $status = $_POST['status'] ?? 'ativo';
 
-        if (!$id || !$nome === '' || !$email === '') {
+        if (!$id || $nome === '' || $email === '') {
             http_response_code(400);
             echo json_encode(['erro' => 'ID, nome, e e-mail são obrigatórios.']);
             return;
