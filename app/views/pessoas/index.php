@@ -65,12 +65,13 @@ require_once __DIR__ . '/../layouts/header.php';
 
                 <div class="col-md-3">
                     <label class="form-label">
-                        Telefone
+                        Telefone *
                     </label>
 
                     <input
                         class="form-control"
-                        name="telefone">
+                        name="telefone"
+                        required>
                 </div>
 
                 <div class="col-md-6">
@@ -87,22 +88,24 @@ require_once __DIR__ . '/../layouts/header.php';
 
                 <div class="col-md-3">
                     <label class="form-label">
-                        Curso
+                        Curso *
                     </label>
 
                     <input
                         class="form-control"
-                        name="curso">
+                        name="curso"
+                        required>
                 </div>
 
                 <div class="col-md-3">
                     <label class="form-label">
-                        Período
+                        Período *
                     </label>
 
                     <input
                         class="form-control"
-                        name="periodo">
+                        name="periodo"
+                        required>
                 </div>
 
                 <div class="col-12">
@@ -282,7 +285,7 @@ async function editarPessoa(id) {
         const p = AtendeLabApi.toObject(
             await AtendeLabApi.get(
                 'pessoas',
-                'buscar',
+                'buscarPorId',
                 { id }
             )
         );
