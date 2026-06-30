@@ -37,7 +37,7 @@ switch ($controller) {
                 http_response_code(404);
                 echo 'Acao de autenticacao nao encontrada.';
         }
-    break;
+        break;
 
     case 'usuarios':
         exigirAutenticacao();
@@ -70,9 +70,10 @@ switch ($controller) {
                 http_response_code(404);
                 echo 'Acao de usuarios nao encontrada.';
         }
-    break;
+        break;
 
     case 'pessoas':
+                exigirAutenticacao();
         
         $pessoasController = new PessoasController();
 
@@ -83,7 +84,7 @@ switch ($controller) {
                 break;
 
             case 'buscarPorId':
-                $pessoasController->buscar();
+                $pessoasController->buscarPorId();
                 break;
 
             case 'criar':
@@ -102,9 +103,10 @@ switch ($controller) {
                 http_response_code(404);
                 echo 'Acao de pessoas nao encontrada.';
         }
-    break;
+        break;
 
-    case 'tiposAtendimentos':
+        case 'tiposAtendimentos':
+                    exigirAutenticacao();
 
         $tiposController = new TiposAtendimentosController();
 
@@ -115,11 +117,11 @@ switch ($controller) {
             break;
 
         case 'buscarPorId':
-            $tiposController->buscar();
+            $tiposController->buscarPorId();
             break;
 
-        case 'cadastrar':
-            $tiposController->criar();
+        case 'criar':
+            $tiposController->cadastrar();
             break;
 
         case 'atualizar':
@@ -133,10 +135,11 @@ switch ($controller) {
         default:
             http_response_code(404);
             echo 'Acao de tipos de atendimento nao encontrada.';
-        }
+    }
     break;
 
     case 'atendimentos':
+                exigirAutenticacao();
 
     $atendimentosController = new AtendimentosController();
 
@@ -147,7 +150,7 @@ switch ($controller) {
             break;
 
         case 'buscarPorId':
-            $atendimentosController->buscar();
+            $atendimentosController->buscarPorId();
             break;
 
         case 'criar':
@@ -164,11 +167,10 @@ switch ($controller) {
 
         default:
             echo 'Ação de atendimentos não encontrada.';
-        }
+    }
     break;
 
     case 'frontend':
-        
     exigirAutenticacao();
 
     $frontendController = new FrontendController();
@@ -191,7 +193,9 @@ switch ($controller) {
             http_response_code(404);
             echo 'Ação do frontend não encontrada.';
     }
+
     break;
+
     default:
         http_response_code(404);
         echo 'Controller nao encontrado.';
