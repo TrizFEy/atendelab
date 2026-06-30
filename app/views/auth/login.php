@@ -76,8 +76,7 @@ require_once __DIR__ . '/../layouts/config-view.php';
                             class="form-control"
                             id="email"
                             name="email"
-                            d
-                            autofocus>
+                            required autofocus>
                     </div>
 
                     <div class="mb-4">
@@ -92,7 +91,7 @@ require_once __DIR__ . '/../layouts/config-view.php';
                             class="form-control"
                             id="senha"
                             name="senha"
-                            d>
+                            required>
                     </div>
 
                     <button
