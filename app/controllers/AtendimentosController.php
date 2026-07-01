@@ -95,6 +95,7 @@ class AtendimentosController
 
         $pessoa_id = filter_input(INPUT_POST, 'pessoa_id', FILTER_VALIDATE_INT);
         $tipo_atendimento_id = filter_input(INPUT_POST, 'tipo_atendimento_id', FILTER_VALIDATE_INT);
+        
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
@@ -103,7 +104,8 @@ class AtendimentosController
         $data_atendimento = trim($_POST['data_atendimento'] ?? '');
         $descricao = trim($_POST['descricao'] ?? '');
         $observacao = trim($_POST['observacao'] ?? '');
-        $status = trim($_POST['status'] ?? 'aberto');
+        $statusInput = trim($_POST['status'] ?? '');
+        $status = ($statusInput !== '') ? $statusInput : 'aberto';
 
         if (
             !$pessoa_id ||
@@ -233,7 +235,7 @@ class AtendimentosController
         try {
 
             $sql = "UPDATE atendimentos
-                    SET status = 'Inativo'
+                    SET status = 'inativo'
                     WHERE id = :id";
 
             $stmt = $this->pdo->prepare($sql);

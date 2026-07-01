@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Tempo de geração: 23/06/2026 às 01:57
+-- Tempo de geração: 01/07/2026 às 14:34
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -36,7 +36,7 @@ CREATE TABLE `atendimentos` (
   `hora_atendimento` time NOT NULL DEFAULT curtime(),
   `descricao` text NOT NULL,
   `observacao` text DEFAULT NULL,
-  `status` enum('ativo','inativo') DEFAULT 'ativo',
+  `status` enum('aberto','em_andamento','concluido','inativo') DEFAULT 'aberto',
   `criado_em` timestamp NOT NULL DEFAULT current_timestamp(),
   `observacao_final` text DEFAULT NULL,
   `atualizado_em` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -47,8 +47,12 @@ CREATE TABLE `atendimentos` (
 --
 
 INSERT INTO `atendimentos` (`id`, `pessoa_id`, `tipo_atendimento_id`, `usuario_id`, `data_atendimento`, `hora_atendimento`, `descricao`, `observacao`, `status`, `criado_em`, `observacao_final`, `atualizado_em`) VALUES
-(1, 1, 1, 1, '2026-06-15', '19:39:00', 'Aluna com dúvidas sobre como lançar as horas complementares no portal.', 'Foi realizado um acesso remoto para demonstrar o passo a passo. Dúvida sanada.', 'ativo', '2026-06-15 22:39:00', NULL, '2026-06-15 23:05:45'),
-(2, 1, 1, 1, '2026-06-22', '20:51:23', 'Aluna com dúvidas sobre como lançar as horas complementares no portal.', 'Foi realizado um acesso remoto para demonstrar o passo a passo. Dúvida sanada.', 'ativo', '2026-06-22 23:51:23', NULL, '2026-06-22 23:51:23');
+(1, 1, 1, 1, '2026-06-15', '19:39:00', 'Aluna com dúvidas sobre como lançar as horas complementares no portal.', '', 'aberto', '2026-06-15 22:39:00', NULL, '2026-07-01 12:33:58'),
+(2, 1, 1, 1, '2026-06-22', '20:51:23', 'Aluna com dúvidas sobre como lançar as horas complementares no portal.', '', 'aberto', '2026-06-22 23:51:23', NULL, '2026-07-01 12:33:58'),
+(3, 4, 2, 1, '2026-06-30', '23:00:00', 'teste', '', 'aberto', '2026-07-01 02:00:52', NULL, '2026-07-01 12:33:58'),
+(4, 2, 4, 1, '2026-06-30', '23:03:00', 'gg', '', 'aberto', '2026-07-01 02:03:14', NULL, '2026-07-01 12:33:58'),
+(5, 2, 3, 1, '2026-06-30', '23:03:00', 'll', '', 'aberto', '2026-07-01 02:03:50', NULL, '2026-07-01 12:33:58'),
+(6, 2, 4, 1, '2026-07-01', '09:30:00', 'teste', '', 'concluido', '2026-07-01 12:32:50', NULL, '2026-07-01 12:33:05');
 
 -- --------------------------------------------------------
 
@@ -75,7 +79,8 @@ CREATE TABLE `pessoas` (
 
 INSERT INTO `pessoas` (`id`, `nome`, `email`, `documento`, `telefone`, `curso`, `periodo`, `status`, `observacoes`, `atualizado_em`) VALUES
 (1, 'Ingrid Silva', 'ingrid.silva@universidade.com', '119.359.105-91', '(47) 99944-6664', 'Ciência da Computação', '6º Período', 'Matriculado', NULL, '2026-06-15 23:05:45'),
-(2, 'Mariana Silva', 'mariana.silva@universidade.com', '119.444.105-91', '(47) 98854-6664', 'Ciência da Computação', '5º Período', 'Matriculado', 'criado dia 22-06', '2026-06-22 23:27:47');
+(2, 'Mariana Silva', 'mariana.silva@universidade.com', '119.444.105-91', '(47) 98854-6664', 'Ciência da Computação', '5º Período', 'Matriculado', 'criado dia 22-06', '2026-06-22 23:27:47'),
+(4, 'bia', 'beaeyng14@gmail.com', '12354646', '216456', '15', '5', 'ativo', 'ç', '2026-07-01 01:49:30');
 
 -- --------------------------------------------------------
 
@@ -99,7 +104,8 @@ INSERT INTO `tipos_atendimentos` (`id`, `nome`, `descricao`, `status`, `atualiza
 (1, 'Treinamento de Sistema', 'Atendimento para orientar o uso do portal acadêmico, emissão de documentos e primeiro acesso.', 'ativo', '2026-06-15 23:05:45'),
 (2, 'Revisão de avaliação', 'Solicitações de revisão de provas, trabalhos e atividades avaliativas.', 'ativo', '2026-06-15 23:13:01'),
 (3, 'Apoio à extensão', 'Orientações relacionadas a projetos de extensão e atividades comunitárias.', 'ativo', '2026-06-15 23:13:01'),
-(4, 'Treinamento de Sistema', 'Atendimento para orientar o uso do portal acadêmico, emissão de documentos e primeiro acesso.', 'ativo', '2026-06-22 23:44:03');
+(4, 'Treinamento de Sistema', 'Atendimento para orientar o uso do portal acadêmico, emissão de documentos e primeiro acesso.', 'ativo', '2026-06-22 23:44:03'),
+(5, 'bia', 'teste', 'ativo', '2026-07-01 01:49:55');
 
 -- --------------------------------------------------------
 
@@ -167,19 +173,19 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `atendimentos`
 --
 ALTER TABLE `atendimentos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `pessoas`
 --
 ALTER TABLE `pessoas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `tipos_atendimentos`
 --
 ALTER TABLE `tipos_atendimentos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
