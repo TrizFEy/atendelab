@@ -53,7 +53,7 @@ require __DIR__ . '/../layouts/header.php';
     document.addEventListener('DOMContentLoaded', async () => {
         const targets = {
             pessoas: document.getElementById('totalPessoas'),
-            tipos: document.getElementById('totalTipos'),
+            tiposAtendimentos: document.getElementById('totalTipos'),
             atendimentos: document.getElementById('totalAtendimentos')
         };
 
