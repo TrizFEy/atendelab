@@ -90,9 +90,11 @@ class PessoasController
         if (
             $nome === '' ||
             $documento === '' ||
+            $email === '' ||
             $telefone === '' ||
             $curso === '' ||
-            $periodo === ''
+            $periodo === '' ||
+            $observacoes === ''
         ) {
             http_response_code(400);
 
