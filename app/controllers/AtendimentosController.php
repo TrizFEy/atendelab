@@ -8,6 +8,7 @@ class AtendimentosController
     public function __construct()
     {
         require __DIR__ . '/../../config/database.php';
+        global $pdo;
         $this->pdo = $pdo;
     }
 

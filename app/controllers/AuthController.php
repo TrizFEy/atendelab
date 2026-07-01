@@ -13,7 +13,7 @@ class AuthController
     {
 
         global $pdo;
-
+        
         $this->pdo = $pdo;
     }
 
