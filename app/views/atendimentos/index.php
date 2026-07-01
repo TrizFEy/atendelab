@@ -53,6 +53,14 @@ require_once __DIR__ . '/../layouts/header.php';
                         required>
                 </div>
 
+                <div class="col-md-4">
+                    <label class="form-label">Hora *</label>
+                    <input
+                        class="form-control"
+                        type="time"
+                        name="hora_atendimento"
+                        required>
+                </div>
 
                 <div class="col-12">
                     <label class="form-label">Descrição *</label>
@@ -90,6 +98,7 @@ require_once __DIR__ . '/../layouts/header.php';
                     <th>Tipo</th>
                     <th>Responsável</th>
                     <th>Data</th>
+                    <th>Hora</th>
                     <th>Status</th>
                     <th class="text-end">Ações</th>
                 </tr>
@@ -97,7 +106,7 @@ require_once __DIR__ . '/../layouts/header.php';
 
             <tbody id="tabelaAtendimentos">
                 <tr>
-                    <td colspan="7" class="text-center py-4">
+                    <td colspan="8" class="text-center py-4">
                         Carregando...
                     </td>
                 </tr>
@@ -259,6 +268,7 @@ async function carregarAtendimentos() {
                 atendimento,
                 'tipo',
                 'tipo_nome',
+                'tipo_atendimento_nome',
                 'tipo_atendimento',
                 'nome_tipo'
             );
@@ -277,6 +287,12 @@ async function carregarAtendimentos() {
                 'data'
             );
 
+            const hora = labelRegistro(
+                atendimento,
+                'hora_atendimento',
+                'hora'
+            );
+
             const statusLimpo = atendimento.status ? atendimento.status.toLowerCase() : 'aberto';
             const classeStatus =
                 atendimento.status === 'concluido'
@@ -292,6 +308,7 @@ async function carregarAtendimentos() {
                     <td>${AtendeLabApi.escape(tipo)}</td>
                     <td>${AtendeLabApi.escape(responsavel)}</td>
                     <td>${AtendeLabApi.escape(data)}</td>
+                    <td>${AtendeLabApi.escape(hora)}</td>
                     <td>
                         <span class="badge ${classeStatus}">
                             ${AtendeLabApi.escape(atendimento.status)}

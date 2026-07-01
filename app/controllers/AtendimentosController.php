@@ -25,6 +25,7 @@ class AtendimentosController
                     a.usuario_id,
                     u.nome AS usuario_nome,
                     a.data_atendimento,
+                    a.hora_atendimento,
                     a.descricao,
                     a.observacao,
                     a.status,
@@ -62,6 +63,7 @@ class AtendimentosController
                     a.usuario_id,
                     u.nome AS usuario_nome,
                     a.data_atendimento,
+                    a.hora_atendimento,
                     a.descricao,
                     a.observacao,
                     a.status,
@@ -93,8 +95,11 @@ class AtendimentosController
 
         $pessoa_id = filter_input(INPUT_POST, 'pessoa_id', FILTER_VALIDATE_INT);
         $tipo_atendimento_id = filter_input(INPUT_POST, 'tipo_atendimento_id', FILTER_VALIDATE_INT);
-        $usuario_id = filter_input(INPUT_POST, 'usuario_id', FILTER_VALIDATE_INT);
-
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $usuario_id = $_SESSION['usuario']['id'] ?? null;
+        $hora_atendimento = trim($_POST['hora_atendimento'] ?? '');
         $data_atendimento = trim($_POST['data_atendimento'] ?? '');
         $descricao = trim($_POST['descricao'] ?? '');
         $observacao = trim($_POST['observacao'] ?? '');
@@ -104,7 +109,8 @@ class AtendimentosController
             !$pessoa_id ||
             !$tipo_atendimento_id ||
             !$usuario_id ||
-            $data_atendimento === ''
+            $data_atendimento === '' ||
+            $hora_atendimento === ''
         ) {
             http_response_code(400);
 
@@ -123,6 +129,7 @@ class AtendimentosController
                         tipo_atendimento_id,
                         usuario_id,
                         data_atendimento,
+                        hora_atendimento,
                         descricao,
                         observacao,
                         status
@@ -133,6 +140,7 @@ class AtendimentosController
                         :tipo_atendimento_id,
                         :usuario_id,
                         :data_atendimento,
+                        :hora_atendimento,
                         :descricao,
                         :observacao,
                         :status
@@ -144,6 +152,7 @@ class AtendimentosController
             $stmt->bindValue(':tipo_atendimento_id', $tipo_atendimento_id, PDO::PARAM_INT);
             $stmt->bindValue(':usuario_id', $usuario_id, PDO::PARAM_INT);
             $stmt->bindValue(':data_atendimento', $data_atendimento);
+            $stmt->bindValue(':hora_atendimento', $hora_atendimento);
             $stmt->bindValue(':descricao', $descricao);
             $stmt->bindValue(':observacao', $observacao);
             $stmt->bindValue(':status', $status);
